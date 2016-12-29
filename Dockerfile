@@ -2,7 +2,7 @@ FROM debian:jessie
 
 MAINTAINER Peter Szalatnay <theotherland@gmail.com>
 
-ENV DEBIAN_FRONTEND=noninteractive PERCONA_MAJOR=56
+ENV DEBIAN_FRONTEND=noninteractive PERCONA_MAJOR=57
 
 RUN \
     groupadd -r mysql && useradd -r -g mysql mysql \
