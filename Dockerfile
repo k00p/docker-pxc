@@ -6,11 +6,13 @@ ENV DEBIAN_FRONTEND=noninteractive PERCONA_MAJOR=57
 
 RUN \
     groupadd -r mysql && useradd -r -g mysql mysql \
-    && apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 430BDF5C56E7C94E848EE60C1C4CBDCDCD2EFD2A \
-    && echo 'deb http://repo.percona.com/apt jessie main' > /etc/apt/sources.list.d/percona.list \
+    #&&  export http_proxy='http://<user>:<pass>@<proxy>' \
+    #&&  export https_proxy='https://<user>:<pass>@<proxy>' \
+    && apt-get update && apt-get install -y curl lsb-release \
+    && curl -LO https://repo.percona.com/apt/percona-release_0.1-4.$(lsb_release -sc)_all.deb \
+    && dpkg -i percona-release_0.1-4.$(lsb_release -sc)_all.deb \
     && apt-get update && apt-get install -y \
         percona-xtradb-cluster-${PERCONA_MAJOR} \
-        curl \
         sysbench \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/lib/mysql \
